@@ -1,0 +1,7 @@
+interface:
+  display_name: "Clinical Lab Prediction Modeling"
+  short_description: "Standardize clinical lab model development"
+  default_prompt: "Use $clinical-lab-prediction-modeling to design a clinical lab prediction model framework, including feature engineering, model selection, validation, and reporting."
+
+policy:
+  allow_implicit_invocation: true

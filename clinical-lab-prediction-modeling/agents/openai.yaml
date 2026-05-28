@@ -1,7 +1,7 @@
 interface:
   display_name: "Clinical Lab Prediction Modeling"
-  short_description: "Standardize clinical lab model development"
-  default_prompt: "Use $clinical-lab-prediction-modeling to design a clinical lab prediction model framework, including feature engineering, model selection, validation, and reporting."
+  short_description: "BMJ-aligned clinical lab model frameworks"
+  default_prompt: "Use $clinical-lab-prediction-modeling to design a BMJ-aligned clinical lab prediction or diagnostic model framework, including intake, sample size feasibility, feature engineering, model selection, validation, calibration, reporting, and downstream R agent handoff."
 
 policy:
   allow_implicit_invocation: true

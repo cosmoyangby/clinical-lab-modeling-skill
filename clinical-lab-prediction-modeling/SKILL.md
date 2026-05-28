@@ -1,6 +1,6 @@
 ---
 name: clinical-lab-prediction-modeling
-description: Standardize clinical laboratory indicator-based diagnostic, predictive, and prognostic model studies. Use when Codex needs to help frame the research question, distinguish diagnostic versus prediction/prognostic boundaries, assess data feasibility, plan feature engineering and predictor selection, choose modeling approaches, evaluate validation and performance, prepare TRIPOD/PROBAST-aligned reporting, or draft downstream R agent prompts for clinical lab model development.
+description: Standardize clinical laboratory indicator-based diagnostic, predictive, and prognostic model studies using BMJ prediction model development and validation guidance, TRIPOD/TRIPOD+AI reporting, and PROBAST/PROBAST+AI bias checks. Use when Codex needs to help frame the research question, distinguish diagnostic versus prediction/prognostic boundaries, assess sample size and data feasibility, plan feature engineering and predictor selection, choose modeling approaches, evaluate validation and performance, or draft downstream R agent prompts for clinical lab model development.
 ---
 
 # Clinical Lab Prediction Modeling
@@ -14,18 +14,21 @@ Focus on research framing, modeling workflow, validation, reporting quality, and
 1. Start with intake: summarize known information and identify missing information.
 2. Ask focused follow-up questions when core design information is missing.
 3. Classify the study as diagnostic, predictive, prognostic, screening, or risk stratification.
-4. Define the clinical question, outcome, prediction horizon or reference standard, and intended use.
-5. Check sample size, event count, class balance, missingness, and validation feasibility.
-6. Choose feature engineering, predictor selection, modeling, validation, and performance strategies according to data characteristics.
+4. Define intended use, target population, decision time, outcome, prediction horizon or reference standard.
+5. Check sample size, event count, candidate parameter count, class balance, missingness, leakage risk, and validation feasibility.
+6. Choose feature engineering, predictor selection, modeling, validation, and performance strategies according to BMJ-style development and evaluation principles.
 7. Produce a full research decision framework only after intake is complete, a dataset is reviewed, or the user explicitly asks for a preliminary draft.
 8. Label incomplete outputs as preliminary drafts and list required confirmations before downstream R agent work.
 
 ## What To Emphasize
 
 - Distinguish diagnostic models from prediction/prognostic models in both method and language.
+- Start from intended clinical use and measurement timing before discussing algorithms.
 - Choose feature screening, collinearity handling, nonlinearity handling, and model type based on the dataset, not a fixed recipe.
 - Treat machine learning as optional and conditional on sample size, event count, class balance, and validation design.
 - Keep preprocessing, feature selection, threshold tuning, and hyperparameter tuning inside training or resampling.
+- Separate apparent performance, internal validation, test-set validation, and external validation.
+- Require calibration for risk prediction and threshold-specific metrics for diagnostic or triage use.
 - Use TRIPOD/TRIPOD+AI and PROBAST/PROBAST+AI concepts for reporting and bias review.
 - Use BMJ prediction-model development and validation guidance as the methodological anchor.
 
@@ -45,6 +48,7 @@ If core information is missing, produce only an intake summary, missing informat
 
 Read the relevant files in `references/` for detailed rules on:
 
+- `bmj-methodology-anchor.md`
 - `intake-checklist.md`
 - `analysis-decision-tree.md`
 - `feature-engineering.md`

@@ -2,6 +2,8 @@
 
 Use this guide for study language, reporting structure, and quality checks.
 
+Use TRIPOD/TRIPOD+AI for transparent reporting and PROBAST/PROBAST+AI for risk of bias and applicability checks.
+
 ## 1. Separate Diagnostic and Prognostic Language
 
 Diagnostic studies ask whether a condition is present now.
@@ -35,6 +37,8 @@ Anchor the manuscript in:
 
 - TRIPOD
 - TRIPOD+AI when machine learning is involved
+- PROBAST for risk of bias and applicability
+- PROBAST+AI when machine learning or AI models are involved
 - BMJ prediction-model development and validation guidance
 
 ## 3. Check Bias Domains
@@ -51,6 +55,10 @@ Review:
 - calibration
 - clinical utility
 - reproducibility
+- intended use and decision context
+- measurement timing and data leakage
+- algorithm complexity relative to event count
+- model transparency and availability for external validation
 
 ## 4. Check Applicability
 
@@ -64,6 +72,9 @@ Consider:
 - center effects
 - patient-mix shift
 - timing differences
+- treatment pathway differences
+- missingness pattern differences
+- outcome or reference standard differences
 
 ## 5. Demand Transparent Reporting
 
@@ -71,14 +82,19 @@ Require the final report to include:
 
 - data source
 - inclusion and exclusion criteria
+- intended use and target population
+- index or baseline time
 - predictor definitions
+- predictor measurement timing
 - outcome definitions
+- prediction horizon or reference standard
 - preprocessing steps
 - screening strategy
 - model form
 - validation strategy
 - performance metrics
 - calibration results
+- clinical utility or decision-curve rationale when decisions are involved
 - limitations
 - code availability
 
@@ -102,4 +118,6 @@ Before handing off output, check for:
 - unsupported cutoff claims
 - missing validation
 - overinterpretation of AUC
+- missing calibration
+- unclear intended use
 - unclear clinical use

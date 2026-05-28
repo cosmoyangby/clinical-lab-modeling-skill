@@ -2,6 +2,8 @@
 
 Use this guide to plan validation and model performance reporting.
 
+Use the BMJ 2024 evaluation and external validation guidance as the anchor for performance claims.
+
 ## 1. Separate Performance Levels
 
 Always distinguish:
@@ -12,6 +14,8 @@ Always distinguish:
 - external validation performance
 
 Do not present apparent performance as final model performance.
+
+Do not describe a random split from the same source and period as external validation.
 
 ## 2. Internal Validation
 
@@ -24,6 +28,8 @@ Preferred options:
 - nested cross-validation when tuning models
 
 Keep feature selection, preprocessing, and hyperparameter tuning inside the resampling loop.
+
+For small datasets, bootstrap validation is often preferable to a single train/test split because it uses all available data for development while estimating optimism.
 
 ## 3. External Validation
 
@@ -41,6 +47,8 @@ Do not use external validation data for feature selection, threshold tuning, or 
 
 If a held-out test set is created from the same source population and time period, describe it as test-set validation rather than external validation.
 
+If model recalibration or updating is performed in the validation data, label it explicitly as model updating and report pre-update and post-update performance separately when possible.
+
 ## 4. Discrimination
 
 Report:
@@ -50,6 +58,8 @@ Report:
 - PR-AUC when class imbalance is important
 
 Do not rely on AUC alone.
+
+For time-to-event outcomes, use time-appropriate discrimination measures and specify the prediction time point.
 
 ## 5. Calibration
 
@@ -65,6 +75,8 @@ Useful outputs:
 
 Poor calibration can make a model unsuitable even when AUC is high.
 
+Calibration should be reported for any model that outputs risk probabilities, including machine learning models.
+
 ## 6. Diagnostic Threshold Performance
 
 For diagnostic models, report threshold-specific performance:
@@ -79,6 +91,8 @@ For diagnostic models, report threshold-specific performance:
 
 Prefer clinically meaningful thresholds over purely data-optimized thresholds.
 
+If a threshold is derived from the development data, validate it within resampling or in an independent dataset before presenting it as a usable cutoff.
+
 ## 7. Prediction and Prognostic Thresholds
 
 For prediction or prognostic models, thresholds should map to clinical decisions.
@@ -90,6 +104,8 @@ Report:
 - sensitivity and specificity at selected thresholds
 - consequences of false positives and false negatives
 
+Avoid presenting risk categories unless their clinical action or interpretation is clear.
+
 ## 8. Clinical Utility
 
 Use decision curve analysis when the model is intended to guide decisions.
@@ -100,6 +116,8 @@ Report:
 - net benefit
 - comparison with treat-all and treat-none
 - comparison with existing practice when available
+
+Decision curve analysis should not replace calibration or discrimination reporting.
 
 ## 9. Class Imbalance
 
@@ -124,3 +142,5 @@ The final report should state:
 - clinical utility
 - limitations
 - whether the model is exploratory or clinically ready
+
+Also state whether the model equation or object was locked before validation.

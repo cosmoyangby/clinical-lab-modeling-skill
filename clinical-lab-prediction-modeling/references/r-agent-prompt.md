@@ -16,9 +16,11 @@ Build a clinical laboratory indicator-based [diagnostic / prediction / prognosti
 
 Study boundary:
 - Diagnostic vs prediction/prognostic: [state clearly]
+- Intended use: [screening / diagnosis / risk prediction / triage / stratification]
+- Target population and setting: [state clearly]
+- Baseline or index time: [specify]
 - Outcome: [name and definition]
 - Prediction horizon or reference standard: [specify]
-- Intended use: [screening / diagnosis / risk prediction / triage / stratification]
 
 Data:
 - File path: [path]
@@ -26,21 +28,25 @@ Data:
 - Sample size: [n]
 - Events or positive cases: [n]
 - Candidate predictors: [list]
+- Candidate parameter concerns: [categorical levels / splines / interactions / derived features]
 - Validation structure: [train/test / internal CV / external validation]
 - Independent validation data: [none / external-center / platform-based / other]
 
 Required steps:
 1. Inspect variables, missingness, and class balance.
-2. Apply leakage-safe preprocessing inside the training pipeline.
-3. Check collinearity and nonlinear relationships.
-4. Choose an analysis strategy based on data characteristics.
-5. Compare a baseline regression model with optional machine learning models only if appropriate.
-6. Validate internally and externally if possible.
-7. Report discrimination, calibration, threshold performance, and clinical utility.
-8. If external validation data are provided, use them only after the model is locked.
+2. Confirm that every predictor is available at the intended decision time.
+3. Apply leakage-safe preprocessing inside the training or resampling pipeline.
+4. Check collinearity, nonlinear relationships, and clinically justified interactions.
+5. Choose an analysis strategy based on sample size, event count, candidate parameters, and validation strength.
+6. Compare a baseline regression model with optional machine learning models only if appropriate.
+7. Validate internally and externally if possible.
+8. Report discrimination, calibration, threshold performance, and clinical utility.
+9. If external validation data are provided, use them only after the model is locked.
 
 Required outputs:
 - cleaned analysis dataset
+- missingness and class balance summary
+- leakage/timing check summary
 - model summary table
 - performance table
 - calibration figure
@@ -55,6 +61,8 @@ Code rules:
 - Add `#` comments before major code blocks.
 - Keep preprocessing inside resampling.
 - Do not leak validation data into tuning.
+- Do not select predictors, thresholds, or transformations using the final validation data.
+- Distinguish apparent, internal validation, test-set, and external validation performance.
 - Save outputs with explicit file names.
 
 Packages:

@@ -29,10 +29,11 @@ Include:
 1. 研究问题
 2. 目标人群
 3. 研究类型与模型用途
-4. 结局定义
-5. 候选预测变量
-6. 当前数据条件
-7. 本研究能回答与不能回答的问题
+4. 临床场景与决策时间点
+5. 结局定义与预测时间窗或参考标准
+6. 候选预测变量
+7. 当前数据条件
+8. 本研究能回答与不能回答的问题
 
 Keep this section factual and concise.
 
@@ -41,17 +42,20 @@ Keep this section factual and concise.
 Include:
 
 1. 样本量与事件数
-2. 变量数量与缺失情况
-3. 验证条件
-4. 可行性判断
-5. 推荐研究定位
+2. 候选变量与候选参数数
+3. 缺失、类别不平衡与数据泄漏风险
+4. 验证条件
+5. 可行性判断
+6. 推荐研究定位
 
 Use one of these feasibility labels:
 
 - 适合模型开发
+- 适合简化模型开发
 - 适合探索性模型开发
 - 更适合关联分析
 - 需要简化设计或补充数据
+- 需要补充外部验证
 
 Explain the feasibility judgment in a short paragraph.
 
@@ -67,6 +71,7 @@ Organize methods under these subsections:
 6. 验证策略
 7. 性能评价
 8. 临床实用性评价
+9. 报告与偏倚控制
 
 For each subsection, use concise inline labels:
 
@@ -98,8 +103,9 @@ Include:
 1. 学术表述
 2. TRIPOD / TRIPOD+AI
 3. PROBAST / PROBAST+AI
-4. 主要偏倚风险
-5. 适用性限制
+4. BMJ 预测模型开发与验证要点
+5. 主要偏倚风险
+6. 适用性限制
 
 Keep the focus on reporting quality and interpretive boundaries.
 
@@ -116,7 +122,10 @@ Cover:
 
 - study type
 - data source
+- intended use and target population
+- baseline or index time
 - outcome and predictors
+- prediction horizon or reference standard
 - preprocessing
 - predictor selection
 - model development

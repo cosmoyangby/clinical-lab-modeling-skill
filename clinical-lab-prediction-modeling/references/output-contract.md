@@ -61,7 +61,9 @@ State:
 
 - model type
 - target population
+- intended clinical setting
 - intended use
+- index or baseline time
 - outcome
 - prediction horizon or reference standard
 - whether the task is diagnostic, prediction, prognostic, screening, or risk stratification
@@ -73,9 +75,12 @@ State:
 - sample size
 - event or positive-case count
 - candidate predictor count
+- candidate parameter count if estimable
 - missingness concerns
 - class imbalance concerns
 - validation availability
+- overfitting risk
+- whether the study is development, validation, model updating, or exploratory
 
 If feasibility is weak, recommend a simpler or exploratory route.
 
@@ -100,12 +105,14 @@ Include:
 - outcome variable
 - candidate predictors
 - model type
+- intended use and prediction horizon or reference standard
 - validation structure
 - required preprocessing
 - candidate models
 - required performance metrics
 - required outputs
 - code style rules
+- leakage-control rules
 
 ## Cautions
 
@@ -117,3 +124,4 @@ Examples:
 - AUC should not be interpreted without calibration.
 - Cutoffs should be justified by clinical decision context.
 - Uncertain outcome definitions should be documented before modeling.
+- External validation requires a locked model and independent setting, time, platform, or population.

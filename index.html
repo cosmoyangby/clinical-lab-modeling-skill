@@ -1,0 +1,1791 @@
+<!--
+  功能：Clinical Lab Modeling Skill 的静态学术路演展示页。
+  用法：直接在浏览器打开本文件，可作为 GitHub Pages 首页或会议展示页使用。
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinical Lab Modeling Skill</title>
+  <style>
+    /* 功能：全局变量与会议投屏基础排版。 */
+    :root {
+      --bg: #f6f7f9;
+      --paper: #ffffff;
+      --paper-soft: #fbfbfd;
+      --ink: #17181c;
+      --muted: #686b73;
+      --line: #d8dbe2;
+      --blue: #0969da;
+      --blue-soft: rgba(9, 105, 218, 0.12);
+      --green: #16845f;
+      --amber: #a86600;
+      --dark: #0d1117;
+      --dark-soft: #161b22;
+      --dark-line: rgba(240, 246, 252, 0.14);
+      --shadow: 0 22px 70px rgba(15, 23, 42, 0.08);
+      --nav-height: 58px;
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 48% -10%, rgba(9, 105, 218, 0.12), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f4f6f8 44%, #ffffff 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    /* 功能：顶部 GitHub-native 导航。 */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: saturate(180%) blur(18px);
+      background: rgba(255, 255, 255, 0.78);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      min-height: var(--nav-height);
+      margin: 0 auto;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      font-size: 13px;
+    }
+
+    .brand {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      color: #f6f8fa;
+      background:
+        radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.18), transparent 34%),
+        var(--dark);
+      box-shadow: 0 10px 28px rgba(13, 17, 23, 0.18);
+    }
+
+    .brand svg {
+      width: 21px;
+      height: 21px;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: #3f434c;
+      font-weight: 650;
+    }
+
+    .nav-links a {
+      white-space: nowrap;
+      transition: color 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--blue);
+    }
+
+    /* 功能：16:9 风格 section 容器，适配学术会议投屏。 */
+    section {
+      min-height: calc(100vh - var(--nav-height));
+      padding: 32px 22px;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .section-inner {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 760;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: clamp(30px, 3.4vw, 48px);
+      line-height: 1.05;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .dark-section {
+      color: #f6f8fa;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(88, 166, 255, 0.16), transparent 30%),
+        var(--dark);
+    }
+
+    .dark-section .lead,
+    .dark-section .section-header p {
+      color: #aeb6c2;
+    }
+
+    .dark-section .section-kicker {
+      color: #58a6ff;
+    }
+
+    .badge {
+      min-height: 30px;
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      color: #07539e;
+      background: #eef6ff;
+      border: 1px solid rgba(9, 105, 218, 0.18);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 720;
+    }
+
+    .badge.dark {
+      color: #c9d7ff;
+      background: rgba(88, 166, 255, 0.14);
+      border-color: rgba(88, 166, 255, 0.26);
+    }
+
+    .hero-meta {
+      width: min(860px, 86vw);
+      min-height: 40px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: #59616d;
+      background: rgba(255, 255, 255, 0.50);
+      border-top: 1px solid rgba(13, 17, 23, 0.12);
+      border-bottom: 1px solid rgba(13, 17, 23, 0.12);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-meta span {
+      white-space: nowrap;
+    }
+
+    .hero-meta span + span::before {
+      content: "/";
+      margin-right: 14px;
+      color: rgba(89, 97, 109, 0.44);
+    }
+
+    /* 功能：首屏动态关键词背景，强化检验建模方法学压力感。 */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - var(--nav-height));
+      padding: 42px 22px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 247, 249, 0.56));
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      width: min(100%, var(--max));
+    }
+
+    .hero-inner::before {
+      content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
+      z-index: -1;
+      width: min(860px, 88vw);
+      height: 260px;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      filter: blur(30px);
+      background:
+        radial-gradient(ellipse at center,
+          rgba(255, 255, 255, 0.96) 0%,
+          rgba(255, 255, 255, 0.82) 36%,
+          rgba(255, 255, 255, 0.34) 70%,
+          rgba(255, 255, 255, 0) 100%);
+    }
+
+    .hero-title {
+      margin: 0 auto 16px;
+      color: var(--ink);
+      font-size: clamp(46px, 5.4vw, 72px);
+      line-height: 1.02;
+      font-weight: 780;
+      white-space: nowrap;
+    }
+
+    .hero-copy {
+      max-width: 920px;
+      margin: 0 auto 18px;
+      color: var(--blue);
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 680;
+    }
+
+    .hero-line {
+      max-width: 960px;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .keyword-field {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0.92;
+    }
+
+    .keyword-row {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      opacity: 0;
+      animation: row-breathe 13s ease-in-out infinite;
+    }
+
+    .keyword-row:nth-child(1) { top: 6%; animation-delay: -1s; }
+    .keyword-row:nth-child(2) { top: 17%; animation-delay: -5s; }
+    .keyword-row:nth-child(3) { top: 28%; animation-delay: -9s; }
+    .keyword-row:nth-child(4) { top: 39%; animation-delay: -3s; }
+    .keyword-row:nth-child(5) { top: 50%; animation-delay: -7s; }
+    .keyword-row:nth-child(6) { top: 61%; animation-delay: -11s; }
+    .keyword-row:nth-child(7) { top: 72%; animation-delay: -4s; }
+    .keyword-row:nth-child(8) { top: 83%; animation-delay: -8s; }
+
+    .keyword-track {
+      width: max-content;
+      display: inline-flex;
+      align-items: center;
+      color: rgba(74, 78, 86, 0.54);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 28px;
+      font-weight: 820;
+      white-space: nowrap;
+      text-shadow: 2px 0 rgba(255, 255, 255, 0.72), 0 2px rgba(255, 255, 255, 0.48);
+      image-rendering: pixelated;
+      animation: stream-keyword 48s linear infinite;
+    }
+
+    .keyword-row:nth-child(even) .keyword-track {
+      color: rgba(119, 124, 132, 0.42);
+      animation-direction: reverse;
+      animation-duration: 54s;
+    }
+
+    .keyword-row:nth-child(3n) .keyword-track {
+      color: rgba(38, 42, 50, 0.48);
+      animation-duration: 60s;
+    }
+
+    .keyword-segment {
+      display: inline-flex;
+      flex: 0 0 auto;
+      gap: 54px;
+      padding-right: 54px;
+      align-items: center;
+    }
+
+    @keyframes stream-keyword {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    @keyframes row-breathe {
+      0%, 100% {
+        opacity: 0.18;
+        transform: translateY(5px);
+      }
+      18%, 78% {
+        opacity: 0.86;
+        transform: translateY(-3px);
+      }
+    }
+
+    /* 功能：第二屏解释 Skill 概念，并引出本项目的 Skill 包结构。 */
+    .project-grid {
+      display: grid;
+      grid-template-columns: 0.96fr 1.04fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .agent-panel {
+      min-height: 430px;
+      overflow: hidden;
+      color: #f0f6fc;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(88, 166, 255, 0.22), transparent 30%),
+        var(--dark);
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 96px rgba(13, 17, 23, 0.28);
+    }
+
+    .agent-head {
+      min-height: 52px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: #161b22;
+      border-bottom: 1px solid var(--dark-line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .agent-head span:last-child {
+      color: #7d8590;
+    }
+
+    .agent-body {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .agent-task {
+      padding: 18px;
+      color: #f0f6fc;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+    }
+
+    .agent-task strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #58a6ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .agent-task p {
+      color: #f0f6fc;
+      font-size: 18px;
+      font-weight: 720;
+    }
+
+    .skill-contrast {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .contrast-card {
+      min-height: 150px;
+      padding: 16px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: var(--radius);
+    }
+
+    .contrast-card.active {
+      background: rgba(88, 166, 255, 0.13);
+      border-color: rgba(88, 166, 255, 0.26);
+    }
+
+    .contrast-card strong {
+      color: #7d8590;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .contrast-card.active strong {
+      color: #79c0ff;
+    }
+
+    .contrast-card h3 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.1;
+    }
+
+    .contrast-card p {
+      color: #aeb6c2;
+      font-size: 14px;
+    }
+
+    .agent-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .agent-flow span {
+      min-height: 44px;
+      padding: 8px;
+      display: grid;
+      place-items: center;
+      color: #d8e8ff;
+      background: rgba(88, 166, 255, 0.10);
+      border: 1px solid rgba(88, 166, 255, 0.18);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 740;
+      text-align: center;
+    }
+
+    .skill-definition {
+      min-height: 430px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .skill-definition h3 {
+      margin-bottom: 14px;
+      font-size: 40px;
+      line-height: 1.05;
+    }
+
+    .skill-definition p {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .skill-formula {
+      margin-top: 20px;
+      padding: 16px;
+      color: #07539e;
+      background: #eef6ff;
+      border: 1px solid rgba(9, 105, 218, 0.18);
+      border-radius: var(--radius);
+      font-size: 17px;
+      font-weight: 760;
+    }
+
+    .skill-package-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .skill-package-list span {
+      min-height: 42px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      color: #20242c;
+      background: #f6f8fa;
+      border: 1px solid rgba(13, 17, 23, 0.08);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 720;
+    }
+
+    .skill-package-list b {
+      min-width: 118px;
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .repo-window {
+      min-height: 430px;
+      overflow: hidden;
+      color: #f0f6fc;
+      background: var(--dark);
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 96px rgba(13, 17, 23, 0.28);
+    }
+
+    .repo-head {
+      min-height: 54px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      background: #161b22;
+      border-bottom: 1px solid var(--dark-line);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .repo-head span:last-child {
+      color: #7d8590;
+      font-weight: 650;
+    }
+
+    .repo-body {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      min-height: 376px;
+    }
+
+    .repo-files {
+      padding: 18px;
+      border-right: 1px solid var(--dark-line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+    }
+
+    .repo-files span {
+      min-height: 34px;
+      padding: 7px 8px;
+      display: flex;
+      align-items: center;
+      color: #c9d1d9;
+      border-radius: 6px;
+    }
+
+    .repo-files span:nth-child(1),
+    .repo-files span:nth-child(2),
+    .repo-files span:nth-child(6) {
+      color: #58a6ff;
+      background: rgba(88, 166, 255, 0.10);
+    }
+
+    .repo-readme {
+      padding: 26px;
+      display: grid;
+      align-content: center;
+      gap: 16px;
+    }
+
+    .repo-readme h3 {
+      margin-bottom: 0;
+      font-size: 34px;
+      line-height: 1.08;
+    }
+
+    .repo-readme p {
+      color: #aeb6c2;
+      font-size: 16px;
+    }
+
+    .repo-note {
+      padding: 14px;
+      color: #d8e8ff;
+      background: rgba(88, 166, 255, 0.12);
+      border: 1px solid rgba(88, 166, 255, 0.22);
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* 功能：方法学优先的指南驱动展示。 */
+    .methodology-board {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .guideline-panel {
+      min-height: 440px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(88, 166, 255, 0.22), transparent 34%),
+        #161b22;
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .guideline-panel h3 {
+      max-width: 540px;
+      margin-bottom: 12px;
+      font-size: 44px;
+      line-height: 1.04;
+    }
+
+    .guideline-panel p {
+      color: #aeb6c2;
+      font-size: 17px;
+    }
+
+    .source-stack {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .source-stack span {
+      min-height: 72px;
+      padding: 12px;
+      display: grid;
+      align-content: center;
+      color: #f0f6fc;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 760;
+      text-align: center;
+    }
+
+    .method-gates {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .gate-card {
+      min-height: 132px;
+      padding: 18px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .gate-card strong {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .gate-card h3 {
+      margin-bottom: 0;
+      font-size: 23px;
+      line-height: 1.12;
+    }
+
+    .gate-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* 功能：Skill 架构模块图。 */
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .module-card {
+      min-height: 168px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .module-card:hover {
+      border-color: rgba(9, 105, 218, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .module-card strong {
+      color: #8c959f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .module-card h3 {
+      margin-bottom: 8px;
+      font-size: 24px;
+      line-height: 1.12;
+    }
+
+    .module-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .architecture-strip {
+      margin-top: 14px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: center;
+      color: #f0f6fc;
+      background: var(--dark);
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+    }
+
+    .architecture-strip h3 {
+      margin-bottom: 4px;
+      font-size: 28px;
+      line-height: 1.08;
+    }
+
+    .architecture-strip p {
+      color: #aeb6c2;
+      font-size: 15px;
+    }
+
+    .mini-terminal {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      color: #c9f0ff;
+      background: #05070a;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .mini-terminal span {
+      color: #7d8590;
+    }
+
+    /* 功能：临床预测模型研究生命周期管线。 */
+    .lifecycle-board {
+      position: relative;
+      padding: 28px;
+      overflow: hidden;
+      color: #f0f6fc;
+      background:
+        linear-gradient(135deg, rgba(88, 166, 255, 0.12), transparent 32%),
+        #0d1117;
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 96px rgba(13, 17, 23, 0.28);
+    }
+
+    .lifecycle-board::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.14;
+      background-image:
+        linear-gradient(rgba(240, 246, 252, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(240, 246, 252, 0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .lifecycle-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .life-step {
+      min-height: 118px;
+      padding: 16px;
+      display: grid;
+      align-content: space-between;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: var(--radius);
+    }
+
+    .life-step strong {
+      color: #58a6ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .life-step h3 {
+      margin-bottom: 6px;
+      font-size: 22px;
+      line-height: 1.12;
+    }
+
+    .life-step p {
+      color: #aeb6c2;
+      font-size: 14px;
+    }
+
+    /* 功能：检验医学真实研究场景矩阵。 */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .scenario-card {
+      min-height: 170px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .scenario-card h3 {
+      margin-bottom: 8px;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .scenario-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .marker-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .marker-row span {
+      padding: 5px 7px;
+      color: #07539e;
+      background: #eef6ff;
+      border: 1px solid rgba(9, 105, 218, 0.14);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    /* 功能：标准化交付包展示。 */
+    .deliverable-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .deliverable-panel {
+      min-height: 430px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .deliverable-panel h3 {
+      margin-bottom: 10px;
+      font-size: 38px;
+      line-height: 1.06;
+    }
+
+    .deliverable-panel p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .output-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .output-list span {
+      min-height: 44px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      color: #20242c;
+      background: #f6f8fa;
+      border: 1px solid rgba(13, 17, 23, 0.08);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 720;
+    }
+
+    .prompt-panel {
+      min-height: 430px;
+      padding: 22px;
+      color: #f0f6fc;
+      background: var(--dark);
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 96px rgba(13, 17, 23, 0.28);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .prompt-head {
+      min-height: 36px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #7d8590;
+      font-size: 13px;
+      font-weight: 760;
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .prompt-code {
+      display: grid;
+      gap: 11px;
+      padding-top: 18px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .prompt-code b {
+      color: #79c0ff;
+      font-weight: 760;
+    }
+
+    .prompt-code span {
+      color: #aeb6c2;
+    }
+
+    /* 功能：案例执行轨迹展示。 */
+    .case-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 1px;
+      overflow: hidden;
+      color: #f0f6fc;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--dark-line);
+      border-radius: var(--radius);
+      box-shadow: 0 30px 96px rgba(13, 17, 23, 0.28);
+    }
+
+    .case-input {
+      min-height: 430px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(88, 166, 255, 0.24), transparent 30%),
+        #161b22;
+    }
+
+    .case-input h3 {
+      margin-bottom: 12px;
+      font-size: 40px;
+      line-height: 1.05;
+    }
+
+    .case-input p {
+      color: #aeb6c2;
+      font-size: 16px;
+    }
+
+    .case-question {
+      padding: 18px;
+      color: #f0f6fc;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      font-size: 17px;
+      font-weight: 720;
+    }
+
+    .case-trace {
+      display: grid;
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .trace-step {
+      min-height: 86px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: #0d1117;
+    }
+
+    .trace-step strong {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #f0f6fc;
+      background: rgba(88, 166, 255, 0.16);
+      border: 1px solid rgba(88, 166, 255, 0.25);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .trace-step h3 {
+      margin-bottom: 5px;
+      font-size: 21px;
+      line-height: 1.12;
+    }
+
+    .trace-step p {
+      color: #aeb6c2;
+      font-size: 14px;
+    }
+
+    .quote {
+      min-height: 56vh;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(9, 105, 218, 0.10), transparent 32%),
+        #ffffff;
+    }
+
+    .quote p {
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: clamp(34px, 4.1vw, 54px);
+      line-height: 1.08;
+      font-weight: 760;
+    }
+
+    footer {
+      padding: 22px;
+      color: #6e7681;
+      background: #ffffff;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .lead {
+        font-size: 17px;
+      }
+
+      .hero-copy {
+        font-size: 24px;
+      }
+
+      .project-grid,
+      .methodology-board,
+      .architecture-strip,
+      .deliverable-grid,
+      .case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .architecture-grid,
+      .scenario-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .repo-body {
+        grid-template-columns: 1fr;
+      }
+
+      .repo-files {
+        border-right: 0;
+        border-bottom: 1px solid var(--dark-line);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 18px;
+      }
+
+      .nav-links {
+        width: 100%;
+        gap: 16px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      section,
+      .hero {
+        min-height: auto;
+        padding: 42px 18px;
+      }
+
+      h2,
+      .lead,
+      .hero-title {
+        white-space: normal;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+
+      .hero-title {
+        font-size: 38px;
+      }
+
+      .hero-copy {
+        font-size: 21px;
+      }
+
+      .hero-meta {
+        width: min(100%, 520px);
+        min-height: auto;
+        padding: 10px 0;
+        flex-wrap: wrap;
+        row-gap: 7px;
+        background: transparent;
+      }
+
+      .hero-meta span + span::before {
+        margin-right: 9px;
+      }
+
+      .keyword-track {
+        font-size: 22px;
+      }
+
+      .architecture-grid,
+      .scenario-grid,
+      .lifecycle-grid,
+      .method-gates,
+      .source-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .identity-panel,
+      .repo-window,
+      .guideline-panel,
+      .deliverable-panel,
+      .prompt-panel,
+      .case-input {
+        min-height: auto;
+      }
+
+      .quote p {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="页面导航">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Clinical Lab Modeling Skill 首页">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2.8 20 7.3v9.4l-8 4.5-8-4.5V7.3L12 2.8Z"/>
+          <path d="M4 7.3 12 11.8l8-4.5"/>
+          <path d="M12 11.8v9.4"/>
+          <path d="M8 5.1 16 9.6"/>
+          <path d="M8 18.9V9.6l8-4.5"/>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="#project">Skill</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#lifecycle">Lifecycle</a>
+        <a href="#scenarios">Scenarios</a>
+        <a href="#deliverables">Deliverables</a>
+        <a href="#case">Case</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="keyword-field" aria-hidden="true">
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>COHORT DEFINITION</span><span>队列定义</span><span>ENDPOINT CONSTRUCTION</span><span>结局变量构建</span><span>BMJ GUIDANCE</span><span>方法学优先</span></div>
+            <div class="keyword-segment"><span>COHORT DEFINITION</span><span>队列定义</span><span>ENDPOINT CONSTRUCTION</span><span>结局变量构建</span><span>BMJ GUIDANCE</span><span>方法学优先</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>STUDY TYPE CLASSIFICATION</span><span>研究类型判定</span><span>PREDICTION HORIZON</span><span>预测时间窗</span><span>REFERENCE STANDARD</span></div>
+            <div class="keyword-segment"><span>STUDY TYPE CLASSIFICATION</span><span>研究类型判定</span><span>PREDICTION HORIZON</span><span>预测时间窗</span><span>REFERENCE STANDARD</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>CALIBRATION</span><span>模型校准</span><span>LEAKAGE CONTROL</span><span>数据泄漏控制</span><span>EPV ASSESSMENT</span><span>缺失值分析</span></div>
+            <div class="keyword-segment"><span>CALIBRATION</span><span>模型校准</span><span>LEAKAGE CONTROL</span><span>数据泄漏控制</span><span>EPV ASSESSMENT</span><span>缺失值分析</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>SURVIVAL ANALYSIS</span><span>生存分析</span><span>COX MODEL</span><span>LOGISTIC BASELINE</span><span>弹性网络模型</span><span>可解释性约束</span></div>
+            <div class="keyword-segment"><span>SURVIVAL ANALYSIS</span><span>生存分析</span><span>COX MODEL</span><span>LOGISTIC BASELINE</span><span>弹性网络模型</span><span>可解释性约束</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>TRIPOD AI</span><span>透明报告</span><span>PROBAST AI</span><span>偏倚风险评估</span><span>OPEN SOURCE SKILL</span><span>可复现研究流程</span></div>
+            <div class="keyword-segment"><span>TRIPOD AI</span><span>透明报告</span><span>PROBAST AI</span><span>偏倚风险评估</span><span>OPEN SOURCE SKILL</span><span>可复现研究流程</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>VARIABLE SCREENING</span><span>变量筛选</span><span>FEATURE ENGINEERING</span><span>特征工程</span><span>CLINICAL UTILITY</span><span>决策曲线分析</span></div>
+            <div class="keyword-segment"><span>VARIABLE SCREENING</span><span>变量筛选</span><span>FEATURE ENGINEERING</span><span>特征工程</span><span>CLINICAL UTILITY</span><span>决策曲线分析</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>SAMPLE SIZE PLANNING</span><span>样本量规划</span><span>EVENT COUNT REVIEW</span><span>类别不平衡</span><span>MODEL COMPLEXITY CONTROL</span></div>
+            <div class="keyword-segment"><span>SAMPLE SIZE PLANNING</span><span>样本量规划</span><span>EVENT COUNT REVIEW</span><span>类别不平衡</span><span>MODEL COMPLEXITY CONTROL</span></div>
+          </div>
+        </div>
+        <div class="keyword-row">
+          <div class="keyword-track">
+            <div class="keyword-segment"><span>SKILL.MD</span><span>方法学参考库</span><span>OUTPUT CONTRACT</span><span>R AGENT PROMPT</span><span>科学工作流</span></div>
+            <div class="keyword-segment"><span>SKILL.MD</span><span>方法学参考库</span><span>OUTPUT CONTRACT</span><span>R AGENT PROMPT</span><span>科学工作流</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-inner">
+        <h1 class="hero-title">Clinical Lab Modeling Skill</h1>
+        <p class="hero-copy">面向检验医学预测建模的开源 AI Skill</p>
+        <p class="hero-line">将 BMJ / TRIPOD 指南驱动的临床建模方法学，转化为 AI 可执行的研究逻辑。</p>
+        <div class="hero-meta" aria-label="项目元信息">
+          <span>Open source</span>
+          <span>GitHub native</span>
+          <span>BMJ / TRIPOD guided</span>
+          <span>Lab medicine</span>
+          <span>Prediction research</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="project">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Project Identity</p>
+          <h2>开源研究 Skill 项目</h2>
+          <p class="lead">GitHub 开源 AI Skill 项目：把临床预测模型研究经验封装成可执行方法学模块。</p>
+        </div>
+
+        <div class="project-grid">
+          <aside class="identity-panel">
+            <div>
+              <h3>From reporting guidelines to executable research logic.</h3>
+              <p>
+                Clinical Lab Modeling Skill 将检验医学预测模型研究中的 cohort、endpoint、biomarker、validation 与 reporting 判断，沉淀为 agent 可读取、可追问、可交付的开放式 Skill。
+              </p>
+            </div>
+            <div class="principle-list">
+              <span>Skill 不是“生成模型”的按钮，而是可复用的研究方法学接口。</span>
+              <span>AI 不直接替代研究设计，而是先执行方法学治理。</span>
+              <span>项目天然适合 GitHub 托管、版本迭代、同行审阅和扩展。</span>
+            </div>
+          </aside>
+
+          <div class="repo-window" aria-label="GitHub 风格项目结构">
+            <div class="repo-head">
+              <span>clinical-lab-modeling-skill</span>
+              <span>open-source scientific skill</span>
+            </div>
+            <div class="repo-body">
+              <div class="repo-files">
+                <span>clinical-lab-prediction-modeling/</span>
+                <span>|-- SKILL.md</span>
+                <span>|-- references/intake-checklist.md</span>
+                <span>|-- references/analysis-decision-tree.md</span>
+                <span>|-- references/ml-suitability.md</span>
+                <span>|-- references/output-contract.md</span>
+                <span>|-- scripts/render_deliverable_docx.py</span>
+                <span>|-- scripts/write_agent_prompt_md.py</span>
+              </div>
+              <div class="repo-readme">
+                <h3>SKILL.md defines when and how the methodology runs.</h3>
+                <p>
+                  references/ 保存 BMJ、TRIPOD、PROBAST 思路下的决策规则；scripts/ 负责把确认后的研究逻辑渲染为标准化交付物。
+                </p>
+                <div class="repo-note">This skill operationalizes methodological reasoning in clinical laboratory prediction research.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="methodology" class="dark-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Guideline-driven Clinical Modeling</p>
+          <h2>方法学优先，模型其次</h2>
+          <p class="lead">核心不是多跑几个算法，而是在模型前执行 BMJ / TRIPOD 风格的方法学检查。</p>
+        </div>
+
+        <div class="methodology-board">
+          <aside class="guideline-panel">
+            <div>
+              <span class="badge dark">Methodology protocol engine</span>
+              <h3>AI 先成为方法学执行层，再进入建模执行层。</h3>
+              <p>
+                预测模型研究的质量，往往在建模前就被决定：队列是否成立、结局是否明确、时间窗是否正确、检验指标是否泄漏未来信息、验证策略是否足以支撑结论。
+              </p>
+            </div>
+            <div class="source-stack">
+              <span>BMJ prediction model recommendations</span>
+              <span>TRIPOD / TRIPOD+AI reporting principles</span>
+              <span>PROBAST / PROBAST+AI bias review</span>
+            </div>
+          </aside>
+
+          <div class="method-gates">
+            <article class="gate-card">
+              <strong>01</strong>
+              <h3>Cohort validity inspection</h3>
+              <p>检查目标人群、纳排标准、index time 与预测起点是否一致。</p>
+            </article>
+            <article class="gate-card">
+              <strong>02</strong>
+              <h3>Endpoint definition</h3>
+              <p>区分诊断、预测、预后、筛查或风险分层，明确 reference standard 或 prediction horizon。</p>
+            </article>
+            <article class="gate-card">
+              <strong>03</strong>
+              <h3>Leakage detection</h3>
+              <p>识别未来信息、治疗后指标、阈值调参外泄和验证集污染。</p>
+            </article>
+            <article class="gate-card">
+              <strong>04</strong>
+              <h3>EPV and feasibility review</h3>
+              <p>用事件数、候选变量数、类别不平衡和缺失情况决定模型复杂度。</p>
+            </article>
+            <article class="gate-card">
+              <strong>05</strong>
+              <h3>Calibration-first evaluation</h3>
+              <p>AUC 之外必须规划 calibration plot、Brier score、DCA 和阈值表现。</p>
+            </article>
+            <article class="gate-card">
+              <strong>06</strong>
+              <h3>Interpretability constraints</h3>
+              <p>当临床可解释性优先时，优先推荐 logistic、Cox、penalized regression 或可解释比较路线。</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Skill Architecture</p>
+          <h2>研究方案执行引擎</h2>
+          <p class="lead">把检验预测模型研究拆成可复用、可追问、可审阅的 methodology modules。</p>
+        </div>
+
+        <div class="architecture-grid">
+          <article class="module-card">
+            <strong>MODULE 01</strong>
+            <div>
+              <h3>Cohort definition</h3>
+              <p>目标人群、index time、纳排标准和数据来源一致性。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 02</strong>
+            <div>
+              <h3>Endpoint construction</h3>
+              <p>诊断 reference standard、预测时间窗、预后事件和删失结构。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 03</strong>
+            <div>
+              <h3>Laboratory feature assessment</h3>
+              <p>连续指标、偏态分布、重复测量、派生比值和平台差异。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 04</strong>
+            <div>
+              <h3>Missingness analysis</h3>
+              <p>缺失机制、插补策略、完整案例风险和重采样内预处理。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 05</strong>
+            <div>
+              <h3>Variable screening</h3>
+              <p>避免单因素 P 值筛选；按临床组块、惩罚回归或稳定性选择。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 06</strong>
+            <div>
+              <h3>Model planning</h3>
+              <p>从可解释基线到机器学习比较，按样本量和验证强度触发。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 07</strong>
+            <div>
+              <h3>Validation workflow</h3>
+              <p>bootstrap、cross-validation、nested CV 或锁定后的外部验证。</p>
+            </div>
+          </article>
+          <article class="module-card">
+            <strong>MODULE 08</strong>
+            <div>
+              <h3>Reporting generation</h3>
+              <p>TRIPOD-style methods、bias cautions、R agent prompt 和交付契约。</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="architecture-strip">
+          <div>
+            <h3>Composable skill, not one-off prompt.</h3>
+            <p>Skill 通过内部规范和参考文件，把临床研究逻辑稳定注入每一次 agent 执行。</p>
+          </div>
+          <div class="mini-terminal" aria-label="Skill 执行提示">
+            <span>agent.load("clinical-lab-prediction-modeling")</span>
+            <b>read SKILL.md -> inspect references -> ask missing design questions</b>
+            <b>lock methodology -> generate framework.docx + r-agent-prompt.md</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lifecycle" class="dark-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Clinical Modeling Lifecycle</p>
+          <h2>从临床问题到 TRIPOD 风格报告</h2>
+          <p class="lead">以 protocol governance 贯穿可复现临床预测模型研究全流程。</p>
+        </div>
+
+        <div class="lifecycle-board" aria-label="Clinical modeling lifecycle">
+          <div class="lifecycle-grid">
+            <article class="life-step">
+              <strong>01</strong>
+              <div>
+                <h3>Clinical Question</h3>
+                <p>疾病、场景、目标使用方式和临床决策位置。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>02</strong>
+              <div>
+                <h3>Cohort Construction</h3>
+                <p>目标人群、index time、纳排标准和数据窗口。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>03</strong>
+              <div>
+                <h3>Variable Screening</h3>
+                <p>CRP、PCT、D-dimer、lactate、WBC、PLT 等检验指标候选集。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>04</strong>
+              <div>
+                <h3>Missingness Analysis</h3>
+                <p>缺失比例、缺失机制、插补路线和敏感性分析。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>05</strong>
+              <div>
+                <h3>Feature Engineering</h3>
+                <p>非线性、偏态、重复测量、比值与临床可解释特征。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>06</strong>
+              <div>
+                <h3>Model Development</h3>
+                <p>logistic、Cox、elastic net、tree-based 或 ML comparison。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>07</strong>
+              <div>
+                <h3>Calibration & Validation</h3>
+                <p>内部验证、外部验证、calibration、Brier score 和 PR-AUC。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>08</strong>
+              <div>
+                <h3>Clinical Utility</h3>
+                <p>DCA、阈值策略、false positive / false negative 后果。</p>
+              </div>
+            </article>
+            <article class="life-step">
+              <strong>09</strong>
+              <div>
+                <h3>TRIPOD-style Reporting</h3>
+                <p>透明报告、偏倚风险、适用性边界和可复现交付。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Clinical Research Scenarios</p>
+          <h2>检验医学预测研究场景</h2>
+          <p class="lead">围绕队列、结局、检验指标、验证和报告规范，服务真实临床检验研究。</p>
+        </div>
+
+        <div class="scenario-grid">
+          <article class="scenario-card">
+            <div>
+              <h3>Sepsis prediction</h3>
+              <p>从炎症指标和器官功能指标定义早期风险，规划基线模型与外部验证。</p>
+            </div>
+            <div class="marker-row"><span>CRP</span><span>PCT</span><span>lactate</span><span>WBC</span><span>PLT</span></div>
+          </article>
+          <article class="scenario-card">
+            <div>
+              <h3>ICU deterioration</h3>
+              <p>围绕 ICU 转入、机械通气、休克或死亡等 endpoint 建立短期预测模型。</p>
+            </div>
+            <div class="marker-row"><span>lactate</span><span>creatinine</span><span>albumin</span><span>bilirubin</span></div>
+          </article>
+          <article class="scenario-card">
+            <div>
+              <h3>Coagulation risk</h3>
+              <p>把凝血相关指标用于出血、血栓或 DIC 风险研究，并控制阈值选择偏倚。</p>
+            </div>
+            <div class="marker-row"><span>D-dimer</span><span>PT</span><span>APTT</span><span>FIB</span><span>PLT</span></div>
+          </article>
+          <article class="scenario-card">
+            <div>
+              <h3>Biomarker fusion</h3>
+              <p>比较单一 biomarker、组合评分和机器学习特征融合的增益与可解释性。</p>
+            </div>
+            <div class="marker-row"><span>CRP/PCT</span><span>NLR</span><span>PLR</span><span>biochemical markers</span></div>
+          </article>
+          <article class="scenario-card">
+            <div>
+              <h3>Survival analysis</h3>
+              <p>当 endpoint 是时间到事件，自动切换到 Cox、删失、随访时间和 C-index 思路。</p>
+            </div>
+            <div class="marker-row"><span>Cox</span><span>censoring</span><span>C-index</span><span>time horizon</span></div>
+          </article>
+          <article class="scenario-card">
+            <div>
+              <h3>Inflammation monitoring</h3>
+              <p>利用重复检测指标构建动态风险，但先定义 measurement window，避免未来信息泄漏。</p>
+            </div>
+            <div class="marker-row"><span>serial CRP</span><span>PCT trend</span><span>WBC</span><span>neutrophil</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Reproducible Research Outputs</p>
+          <h2>输出标准化研究交付物</h2>
+          <p class="lead">Skill 的终点是一组可复核、可交接、可复现的研究文件。</p>
+        </div>
+
+        <div class="deliverable-grid">
+          <aside class="deliverable-panel">
+            <div>
+              <h3>Output contract as scientific handoff.</h3>
+              <p>
+                当 intake 完整后，Skill 不停留在一段建议，而是生成研究者可审阅的 framework、下游 R agent 可执行的 prompt，以及论文方法学草稿。
+              </p>
+            </div>
+            <div class="output-list">
+              <span>research-decision-framework.docx</span>
+              <span>r-agent-prompt.md</span>
+              <span>bilingual manuscript methods draft</span>
+              <span>TRIPOD / PROBAST-aligned cautions</span>
+            </div>
+          </aside>
+
+          <div class="prompt-panel" aria-label="R agent prompt preview">
+            <div class="prompt-head">
+              <span>r-agent-prompt.md</span>
+              <span>downstream execution contract</span>
+            </div>
+            <div class="prompt-code">
+              <span><b>Study boundary:</b> prognostic model for 30-day deterioration</span>
+              <span><b>Cohort:</b> adult hospitalized patients, baseline labs within 24h</span>
+              <span><b>Candidate predictors:</b> CRP, PCT, lactate, WBC, PLT, D-dimer, biochemical markers</span>
+              <span><b>Preprocessing rule:</b> imputation, scaling, feature selection inside resampling</span>
+              <span><b>Model plan:</b> logistic baseline, penalized regression, conditional ML comparison</span>
+              <span><b>Validation:</b> bootstrap or repeated CV; external cohort only after workflow lock</span>
+              <span><b>Report:</b> AUC, PR-AUC, calibration, Brier score, DCA, TRIPOD-style methods</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="case" class="dark-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-kicker">Execution Trace</p>
+          <h2>从研究想法到建模方案</h2>
+          <p class="lead">把粗略课题设想转译为受方法学约束、可执行、可交接的建模 protocol。</p>
+        </div>
+
+        <div class="case-grid">
+          <aside class="case-input">
+            <div>
+              <span class="badge dark">Input from researcher</span>
+              <h3>一个检验科常见研究想法。</h3>
+              <p>
+                指标很多、算法很多，但真正需要先确定的是研究类型、结局、时间窗、数据可行性和验证强度。
+              </p>
+            </div>
+            <div class="case-question">
+              “我想用 CRP、PCT、D-dimer、lactate、WBC、PLT 和生化指标，预测脓毒症患者 30 天不良预后。”
+            </div>
+          </aside>
+
+          <div class="case-trace">
+            <article class="trace-step">
+              <strong>01</strong>
+              <div>
+                <h3>Classify the study</h3>
+                <p>这是 prediction / prognostic model，不是当前疾病诊断；必须定义 baseline time 和 30-day horizon。</p>
+              </div>
+            </article>
+            <article class="trace-step">
+              <strong>02</strong>
+              <div>
+                <h3>Inspect cohort and leakage</h3>
+                <p>检验指标必须限定在预测起点前窗口内，排除治疗后指标和结局发生后的信息。</p>
+              </div>
+            </article>
+            <article class="trace-step">
+              <strong>03</strong>
+              <div>
+                <h3>Review feasibility</h3>
+                <p>用样本量、事件数、候选变量数、缺失比例和类别不平衡决定是否适合复杂 ML。</p>
+              </div>
+            </article>
+            <article class="trace-step">
+              <strong>04</strong>
+              <div>
+                <h3>Lock model route</h3>
+                <p>优先可解释基线模型；只有验证条件充分时，才加入 random forest、XGBoost 或深度学习比较。</p>
+              </div>
+            </article>
+            <article class="trace-step">
+              <strong>05</strong>
+              <div>
+                <h3>Generate reproducible handoff</h3>
+                <p>输出 framework.docx、r-agent-prompt.md、methods draft 和风险提示，供后续 R agent 执行。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote">
+      <p>From clinical modeling guidelines to executable AI methodology.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Clinical Lab Modeling Skill</span>
+      <span>Open-source methodology infrastructure for laboratory medicine prediction research.</span>
+    </div>
+  </footer>
+</body>
+</html>

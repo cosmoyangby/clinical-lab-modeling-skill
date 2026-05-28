@@ -4,6 +4,8 @@ Use this checklist before creating an analysis framework or downstream R agent p
 
 Do not create the full research decision framework until intake is complete, the uploaded dataset has been reviewed, or the user explicitly asks for a preliminary draft.
 
+Use `bmj-methodology-anchor.md` when the user asks for a formal research framework, publication-oriented design, sample size judgment, validation plan, or reporting/bias review.
+
 If core information is missing, return only:
 
 1. known information
@@ -18,16 +20,19 @@ Ask for or infer:
 
 - dataset path and file type
 - study type
+- intended clinical use
+- target population and setting
+- index or baseline time
 - outcome variable
+- prediction horizon or reference standard
 - candidate predictors
 - sample size
 - number of events or positive cases
 - validation structure
-- intended clinical use
 
 If these are missing, ask focused follow-up questions before designing the full workflow.
 
-Core design information includes study type, outcome definition, prediction time or reference standard, event count, candidate predictors, and validation structure.
+Core design information includes study type, intended use, target population, baseline or index time, outcome definition, prediction horizon or reference standard, event count, candidate predictors, and validation structure.
 
 ## 2. Study Type Questions
 
@@ -46,6 +51,8 @@ For diagnostic studies, ask:
 - What is the reference standard?
 - Were predictors measured before or near diagnosis?
 - Is the goal screening, diagnosis support, or triage?
+- Are cases and controls sampled from the same intended-use population?
+- Will the model output a probability, a cutoff result, or a triage category?
 
 For prediction or prognostic studies, ask:
 
@@ -53,6 +60,7 @@ For prediction or prognostic studies, ask:
 - What is the prediction horizon?
 - What is the future outcome?
 - Is there censoring or follow-up time?
+- Will the output be used as absolute risk, risk category, or decision threshold?
 
 ## 3. Dataset Questions
 
@@ -63,6 +71,8 @@ Ask:
 - Are there multiple centers, batches, platforms, or time periods?
 - Is there a separate external validation dataset?
 - Are train/test splits already defined?
+- Are there platform, reagent, unit, or reference interval differences?
+- Was any treatment started before predictor measurement?
 
 ## 4. Variable Questions
 
@@ -75,6 +85,7 @@ Ask:
 - Are reference intervals available?
 - Are there derived ratios or scores?
 - Are any variables measured after outcome or diagnosis?
+- Are predictors available at the intended decision time in real clinical use?
 
 ## 5. Feasibility Questions
 
@@ -82,9 +93,11 @@ Ask:
 
 - How many events or positive cases are available?
 - How many candidate predictors are planned?
+- How many candidate parameters may be created after dummy variables, splines, interactions, or derived features?
 - What is the missingness pattern?
 - Is class imbalance severe?
 - Is external validation possible?
+- Is the model intended for development only, external validation, or model updating?
 
 If feasibility is weak, recommend a simpler and more exploratory analysis.
 

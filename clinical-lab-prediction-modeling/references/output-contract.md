@@ -97,6 +97,8 @@ Do not turn these labels into excessive heading levels.
 
 For predictor selection, state the candidate predictor pool, pre-model exclusions, forced-in clinical variables, main selection route, and leakage-control plan.
 
+The Word framework must include a compact statistical-methods summary table. Recommended methods should be explicit for collinearity assessment, nonlinearity assessment, missing data, predictor selection, final modeling, validation, calibration, threshold analysis, nomogram or risk score presentation, and decision curve analysis.
+
 ## R Agent Prompt
 
 Generate the R agent prompt as conditional or draft until the user confirms key choices.

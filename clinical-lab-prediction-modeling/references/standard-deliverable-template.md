@@ -82,6 +82,18 @@ For each subsection, use concise inline labels:
 
 Do not turn these labels into many additional heading levels.
 
+Add a compact "核心统计学方法速览" table after the subsection narrative. It should make recommended methods explicit for:
+
+- 描述与基线比较
+- 缺失值处理
+- 共线性评估
+- 非线性评估
+- 变量筛选
+- 最终建模
+- 模型呈现：列线图、风险评分、风险分层
+- 内部或外部验证
+- 临床实用性评价
+
 For 变量筛选, include:
 
 - 候选变量池：
@@ -93,7 +105,11 @@ For 变量筛选, include:
 
 ## 四、推荐分析流程
 
-Provide an ordered plan:
+Provide an ordered plan as a table with:
+
+- 步骤
+- 推荐统计学方法
+- 主要输出
 
 1. 数据检查
 2. 变量处理

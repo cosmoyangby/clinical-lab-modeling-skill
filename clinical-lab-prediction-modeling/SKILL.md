@@ -25,6 +25,7 @@ Focus on research framing, modeling workflow, validation, reporting quality, and
 - Distinguish diagnostic models from prediction/prognostic models in both method and language.
 - Start from intended clinical use and measurement timing before discussing algorithms.
 - Choose feature screening, collinearity handling, nonlinearity handling, and model type based on the dataset, not a fixed recipe.
+- Treat predictor selection as a prespecified methodological decision; avoid univariable P-value screening as the main strategy.
 - Treat machine learning as optional and conditional on sample size, event count, class balance, and validation design.
 - Keep preprocessing, feature selection, threshold tuning, and hyperparameter tuning inside training or resampling.
 - Separate apparent performance, internal validation, test-set validation, and external validation.
@@ -52,6 +53,7 @@ Read the relevant files in `references/` for detailed rules on:
 - `intake-checklist.md`
 - `analysis-decision-tree.md`
 - `feature-engineering.md`
+- `predictor-selection.md`
 - `model-selection.md`
 - `diagnostic-vs-prognostic.md`
 - `ml-suitability.md`

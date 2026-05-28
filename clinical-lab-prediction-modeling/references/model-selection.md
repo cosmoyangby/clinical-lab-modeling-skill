@@ -26,13 +26,17 @@ Prefer interpretable models first when:
 
 ## 3. Decide Screening Strategy
 
+Use `predictor-selection.md` for the full variable selection methodology.
+
 Choose predictor screening based on data characteristics:
 
 - no screening: when variables are few and clinically justified
 - expert pre-specification: when prior knowledge is strong
+- clinical preselection plus shrinkage: when interpretability matters but overfitting risk remains
 - penalized selection: when predictors are many or correlated
 - stability-based selection: when robustness matters
 - block-wise selection: when predictors belong to clear clinical groups
+- machine learning feature selection: only when data volume and validation are strong
 
 Avoid one-round univariable P-value selection as the main rule.
 

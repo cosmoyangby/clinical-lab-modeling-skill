@@ -92,14 +92,22 @@ If derived ratios are requested:
 
 ## 4. Choose Predictor Selection Route
 
+Use `predictor-selection.md` for detailed route selection.
+
 If variables are few and clinically justified:
 
 - use prespecified full model
 - consider shrinkage or penalization if overfitting risk remains
 
+If variables are clinically essential but overfitting risk is moderate:
+
+- use clinical preselection plus shrinkage
+- consider ridge regression or global shrinkage
+
 If variables are many or correlated:
 
 - use LASSO or elastic net
+- prefer elastic net when correlated laboratory indicators cluster biologically
 
 If robustness is important:
 
@@ -108,6 +116,11 @@ If robustness is important:
 If predictors belong to clinical groups:
 
 - use block-wise comparison
+
+If machine learning feature selection is requested:
+
+- use it only with adequate sample size and nested validation
+- treat importance rankings as exploratory unless externally validated
 
 Avoid choosing predictors only by univariable P value.
 

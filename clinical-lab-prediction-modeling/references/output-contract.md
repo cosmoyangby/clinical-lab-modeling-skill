@@ -95,6 +95,8 @@ Inside each methods subsection, include concise inline content for:
 
 Do not turn these labels into excessive heading levels.
 
+For predictor selection, state the candidate predictor pool, pre-model exclusions, forced-in clinical variables, main selection route, and leakage-control plan.
+
 ## R Agent Prompt
 
 Generate the R agent prompt as conditional or draft until the user confirms key choices.

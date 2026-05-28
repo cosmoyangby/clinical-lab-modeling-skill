@@ -569,91 +569,6 @@
       font-weight: 820;
     }
 
-    .repo-window {
-      min-height: 430px;
-      overflow: hidden;
-      color: #f0f6fc;
-      background: var(--dark);
-      border: 1px solid var(--dark-line);
-      border-radius: var(--radius);
-      box-shadow: 0 30px 96px rgba(13, 17, 23, 0.28);
-    }
-
-    .repo-head {
-      min-height: 54px;
-      padding: 0 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      background: #161b22;
-      border-bottom: 1px solid var(--dark-line);
-      font-size: 14px;
-      font-weight: 760;
-    }
-
-    .repo-head span:last-child {
-      color: #7d8590;
-      font-weight: 650;
-    }
-
-    .repo-body {
-      display: grid;
-      grid-template-columns: 0.86fr 1.14fr;
-      min-height: 376px;
-    }
-
-    .repo-files {
-      padding: 18px;
-      border-right: 1px solid var(--dark-line);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 14px;
-    }
-
-    .repo-files span {
-      min-height: 34px;
-      padding: 7px 8px;
-      display: flex;
-      align-items: center;
-      color: #c9d1d9;
-      border-radius: 6px;
-    }
-
-    .repo-files span:nth-child(1),
-    .repo-files span:nth-child(2),
-    .repo-files span:nth-child(6) {
-      color: #58a6ff;
-      background: rgba(88, 166, 255, 0.10);
-    }
-
-    .repo-readme {
-      padding: 26px;
-      display: grid;
-      align-content: center;
-      gap: 16px;
-    }
-
-    .repo-readme h3 {
-      margin-bottom: 0;
-      font-size: 34px;
-      line-height: 1.08;
-    }
-
-    .repo-readme p {
-      color: #aeb6c2;
-      font-size: 16px;
-    }
-
-    .repo-note {
-      padding: 14px;
-      color: #d8e8ff;
-      background: rgba(88, 166, 255, 0.12);
-      border: 1px solid rgba(88, 166, 255, 0.22);
-      border-radius: var(--radius);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
     /* 功能：方法学优先的指南驱动展示。 */
     .methodology-board {
       display: grid;
@@ -1159,18 +1074,14 @@
         grid-template-columns: 1fr;
       }
 
+      .agent-panel,
+      .skill-definition {
+        min-height: auto;
+      }
+
       .architecture-grid,
       .scenario-grid {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      .repo-body {
-        grid-template-columns: 1fr;
-      }
-
-      .repo-files {
-        border-right: 0;
-        border-bottom: 1px solid var(--dark-line);
       }
     }
 
@@ -1234,12 +1145,14 @@
       .scenario-grid,
       .lifecycle-grid,
       .method-gates,
-      .source-stack {
+      .source-stack,
+      .skill-contrast,
+      .agent-flow {
         grid-template-columns: 1fr;
       }
 
-      .identity-panel,
-      .repo-window,
+      .agent-panel,
+      .skill-definition,
       .guideline-panel,
       .deliverable-panel,
       .prompt-panel,
@@ -1267,11 +1180,11 @@
       </a>
       <div class="nav-links">
         <a href="#project">Skill</a>
-        <a href="#methodology">Methodology</a>
+        <a href="#methodology">Problem</a>
         <a href="#architecture">Architecture</a>
         <a href="#lifecycle">Lifecycle</a>
         <a href="#scenarios">Scenarios</a>
-        <a href="#deliverables">Deliverables</a>
+        <a href="#deliverables">Outputs</a>
         <a href="#case">Case</a>
       </div>
     </div>
@@ -1347,49 +1260,59 @@
     <section id="project">
       <div class="section-inner">
         <div class="section-header">
-          <p class="section-kicker">Project Identity</p>
-          <h2>开源研究 Skill 项目</h2>
-          <p class="lead">GitHub 开源 AI Skill 项目：把临床预测模型研究经验封装成可执行方法学模块。</p>
+          <p class="section-kicker">What is a Skill?</p>
+          <h2>Skill 让 Agent 按专业规范工作</h2>
+          <p class="lead">它不是一段提示词，而是 agent 可加载、可复用、可执行的方法学模块。</p>
         </div>
 
         <div class="project-grid">
-          <aside class="identity-panel">
-            <div>
-              <h3>From reporting guidelines to executable research logic.</h3>
-              <p>
-                Clinical Lab Modeling Skill 将检验医学预测模型研究中的 cohort、endpoint、biomarker、validation 与 reporting 判断，沉淀为 agent 可读取、可追问、可交付的开放式 Skill。
-              </p>
+          <aside class="agent-panel">
+            <div class="agent-head">
+              <span>agent session</span>
+              <span>skill-aware execution</span>
             </div>
-            <div class="principle-list">
-              <span>Skill 不是“生成模型”的按钮，而是可复用的研究方法学接口。</span>
-              <span>AI 不直接替代研究设计，而是先执行方法学治理。</span>
-              <span>项目天然适合 GitHub 托管、版本迭代、同行审阅和扩展。</span>
+            <div class="agent-body">
+              <div class="agent-task">
+                <strong>USER TASK</strong>
+                <p>“帮我规划一个检验指标预测模型研究。”</p>
+              </div>
+
+              <div class="skill-contrast">
+                <article class="contrast-card">
+                  <strong>without skill</strong>
+                  <h3>临场生成</h3>
+                  <p>可以回答问题，但研究边界、验证策略和报告规范依赖当次对话质量。</p>
+                </article>
+                <article class="contrast-card active">
+                  <strong>with skill</strong>
+                  <h3>规范执行</h3>
+                  <p>先读取内部规则，再按研究类型、数据条件和交付契约推进任务。</p>
+                </article>
+              </div>
+
+              <div class="agent-flow" aria-label="Agent 加载 Skill 后的基础动作">
+                <span>理解目标</span>
+                <span>追问缺口</span>
+                <span>执行判断</span>
+                <span>形成交付</span>
+              </div>
             </div>
           </aside>
 
-          <div class="repo-window" aria-label="GitHub 风格项目结构">
-            <div class="repo-head">
-              <span>clinical-lab-modeling-skill</span>
-              <span>open-source scientific skill</span>
+          <div class="skill-definition">
+            <div>
+              <h3>用 Skill 解决统计方法学规划难题</h3>
+              <p>
+                临床检验建模研究的难点，往往不是不会跑模型，而是不知道如何在建模前完成研究类型、结局定义、变量筛选、模型选择和验证策略的系统规划。
+              </p>
+              <div class="skill-formula">基于 Skill 的能力，把统计方法学判断前置为 agent 可执行的研究流程。</div>
             </div>
-            <div class="repo-body">
-              <div class="repo-files">
-                <span>clinical-lab-prediction-modeling/</span>
-                <span>|-- SKILL.md</span>
-                <span>|-- references/intake-checklist.md</span>
-                <span>|-- references/analysis-decision-tree.md</span>
-                <span>|-- references/ml-suitability.md</span>
-                <span>|-- references/output-contract.md</span>
-                <span>|-- scripts/render_deliverable_docx.py</span>
-                <span>|-- scripts/write_agent_prompt_md.py</span>
-              </div>
-              <div class="repo-readme">
-                <h3>SKILL.md defines when and how the methodology runs.</h3>
-                <p>
-                  references/ 保存 BMJ、TRIPOD、PROBAST 思路下的决策规则；scripts/ 负责把确认后的研究逻辑渲染为标准化交付物。
-                </p>
-                <div class="repo-note">This skill operationalizes methodological reasoning in clinical laboratory prediction research.</div>
-              </div>
+
+            <div class="skill-package-list" aria-label="Skill 解决统计方法学规划痛点">
+              <span><b>01</b>把问题先归类：诊断、预测、预后、筛查或风险分层</span>
+              <span><b>02</b>把缺口问出来：人群、结局、时间窗、事件数和验证数据</span>
+              <span><b>03</b>把方法前置：样本量、缺失值、变量筛选和机器学习适用性</span>
+              <span><b>04</b>把交付标准化：研究规划文档和下游 R agent prompt</span>
             </div>
           </div>
         </div>
@@ -1400,8 +1323,8 @@
       <div class="section-inner">
         <div class="section-header">
           <p class="section-kicker">Guideline-driven Clinical Modeling</p>
-          <h2>方法学优先，模型其次</h2>
-          <p class="lead">核心不是多跑几个算法，而是在模型前执行 BMJ / TRIPOD 风格的方法学检查。</p>
+          <h2>从指南到可执行方法学</h2>
+          <p class="lead">在模型开跑前，把 BMJ / TRIPOD 风格的研究检查变成 AI 可执行判断。</p>
         </div>
 
         <div class="methodology-board">
@@ -1460,8 +1383,8 @@
       <div class="section-inner">
         <div class="section-header">
           <p class="section-kicker">Skill Architecture</p>
-          <h2>研究方案执行引擎</h2>
-          <p class="lead">把检验预测模型研究拆成可复用、可追问、可审阅的 methodology modules。</p>
+          <h2>把研究逻辑拆成 Skill 模块</h2>
+          <p class="lead">从研究边界到报告生成，拆解为可复用、可追问、可审阅的 methodology modules。</p>
         </div>
 
         <div class="architecture-grid">
@@ -1542,7 +1465,7 @@
         <div class="section-header">
           <p class="section-kicker">Clinical Modeling Lifecycle</p>
           <h2>从临床问题到 TRIPOD 风格报告</h2>
-          <p class="lead">以 protocol governance 贯穿可复现临床预测模型研究全流程。</p>
+          <p class="lead">让方法学治理贯穿临床预测模型研究从构想到交付的全流程。</p>
         </div>
 
         <div class="lifecycle-board" aria-label="Clinical modeling lifecycle">
@@ -1620,7 +1543,7 @@
         <div class="section-header">
           <p class="section-kicker">Clinical Research Scenarios</p>
           <h2>检验医学预测研究场景</h2>
-          <p class="lead">围绕队列、结局、检验指标、验证和报告规范，服务真实临床检验研究。</p>
+          <p class="lead">回到真实临床检验问题：队列、结局、检验指标、验证和报告规范必须同时成立。</p>
         </div>
 
         <div class="scenario-grid">
@@ -1675,7 +1598,7 @@
         <div class="section-header">
           <p class="section-kicker">Reproducible Research Outputs</p>
           <h2>输出标准化研究交付物</h2>
-          <p class="lead">Skill 的终点是一组可复核、可交接、可复现的研究文件。</p>
+          <p class="lead">方法学判断最终沉淀为可复核、可交接、可复现的研究文件。</p>
         </div>
 
         <div class="deliverable-grid">

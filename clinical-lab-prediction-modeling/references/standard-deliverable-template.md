@@ -82,6 +82,15 @@ For each subsection, use concise inline labels:
 
 Do not turn these labels into many additional heading levels.
 
+For 变量筛选, include:
+
+- 候选变量池：
+- 建模前排除变量：
+- 强制纳入变量：
+- 推荐筛选路线：
+- 不推荐作为主策略的方法：
+- 稳定性或敏感性分析：
+
 ## 四、推荐分析流程
 
 Provide an ordered plan:
